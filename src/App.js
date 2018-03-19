@@ -20,6 +20,24 @@ class App extends Component {
               name: 'Piotr'
             }
           ]
+        },
+        {
+          id: '2',
+          title: 'Second',
+          users: [
+            {
+              name: 'Piotr'
+            }
+          ]
+        },
+        {
+          id: '3',
+          title: '3rd topic',
+          users: [
+            {
+              name: 'Tati'
+            },
+          ]
         }
       ],
     };
@@ -35,16 +53,14 @@ class App extends Component {
 
   getUserData() {
     getUserData().then((userData) => {
-      this.setState({
-        userData
-      })
-    })
+      this.setState({ userData })
+    }).catch(e => console.log(e))
   }
 
   loginHandle() {
     login()
-    .then(() => {
-      this.getUserData()
+    .then((data) => {
+      this.getUserData(data)
     })
   }
 

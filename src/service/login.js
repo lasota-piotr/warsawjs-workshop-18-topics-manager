@@ -8,12 +8,9 @@ const github = hello('github');
 
 export const login = () => {
   return github.login()
-    .then(() => {
-      github.api('/me').then((data) => {
-        console.log(data);
-        return data
-      })
-    }, (e) => {
+    .then(
+      () => github.api('/me'),
+      (e) => {
       alert('Signin error: ' + e.error.message);
     })
 };
@@ -41,7 +38,7 @@ const getAccessToken = () =>
 export const getUserData = () => {
   const isOnline = isValid(githubGetAuthResponse);
   if (!isOnline) {
-    return Promise.resolve(false);
+    return Promise.reject(new Error('Session expired'));
   }
   const accessToken = getAccessToken();
   return fetch(`https://api.github.com/user?access_token=${accessToken}`)
